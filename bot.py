@@ -2,10 +2,11 @@ import os
 import discord
 from discord.ext import commands
 
-TOKEN = os.getenv("DISCORD_TOKEN")  # This must come from Render's dashboard
+# Read token from environment variable
+TOKEN = os.getenv("DISCORD_TOKEN")
 
 intents = discord.Intents.default()
-intents.message_content = True
+intents.message_content = True  # Needed for commands
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
@@ -18,3 +19,4 @@ async def ping(ctx):
     await ctx.send("Pong!")
 
 bot.run(TOKEN)
+
