@@ -6,11 +6,10 @@ from dotenv import load_dotenv
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 
-# Use default intents WITHOUT privileged message_content
 intents = discord.Intents.default()
-intents.message_content = False  # Disable privileged intent
+intents.message_content = False
 
-bot = commands.Bot(command_prefix="!", intents=intents)  # <-- make sure intents are passed here
+bot = commands.Bot(command_prefix="!", intents=intents)
 
 @bot.event
 async def on_ready():
