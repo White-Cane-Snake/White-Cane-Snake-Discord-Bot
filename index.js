@@ -1,13 +1,13 @@
 require("dotenv").config();
-
 const express = require("express");
+// Added GuildMessages and MessageContent so the bot can read chat
 const { Client, GatewayIntentBits } = require("discord.js");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
 const TOKEN = process.env.DISCORD_TOKEN;
 
-// Simple web server so Render is happy
+// --- WEB SERVER (Keep-alive) ---
 app.get("/", (req, res) => {
   res.send("✅ Bot is running");
 });
@@ -16,13 +16,37 @@ app.listen(PORT, () => {
   console.log(`🌐 Web server running on port ${PORT}`);
 });
 
-// Only use SAFE + DEFAULT intents
+// --- DISCORD BOT ---
 const client = new Client({
-  intents: [GatewayIntentBits.Guilds] // No message, no members, no presences
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages, // REQUIRED: To know when a message is sent
+    GatewayIntentBits.MessageContent // REQUIRED: To read what the message says
+  ]
 });
 
 client.once("ready", () => {
   console.log(`✅ Logged in as ${client.user.tag}`);
+});
+
+// Event Listener: Respond to messages
+client.on("messageCreate", (message) => {
+  // 1. Ignore messages from bots (prevents infinite loops)
+  if (message.author.bot) return;
+
+  // 2. Simple command handler
+  if (message.content.toLowerCase() === "ping") {
+    message.reply("Pong! 🏓");
+  }
+  
+  if (message.content.toLowerCase() === "hello") {
+    message.reply("Hi there! I am online.");
+  }
+});
+
+// Global error handling to prevent crash
+process.on('unhandledRejection', error => {
+	console.error('Unhandled promise rejection:', error);
 });
 
 client.login(TOKEN);
