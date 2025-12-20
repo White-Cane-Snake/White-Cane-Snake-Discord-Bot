@@ -1,6 +1,5 @@
 require("dotenv").config();
 const express = require("express");
-// Added GuildMessages and MessageContent so the bot can read chat
 const { Client, GatewayIntentBits } = require("discord.js");
 
 const app = express();
@@ -20,8 +19,8 @@ app.listen(PORT, () => {
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMessages, // REQUIRED: To know when a message is sent
-    GatewayIntentBits.MessageContent // REQUIRED: To read what the message says
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent
   ]
 });
 
@@ -34,19 +33,13 @@ client.on("messageCreate", (message) => {
   // 1. Ignore messages from bots (prevents infinite loops)
   if (message.author.bot) return;
 
-  // 2. Simple command handler
-  if (message.content.toLowerCase() === "ping") {
-    message.reply("Pong! 🏓");
-  }
+
   
-  if (message.content.toLowerCase() === "hello") {
-    message.reply("Hi there! I am online.");
-  }
 });
 
 // Global error handling to prevent crash
 process.on('unhandledRejection', error => {
-	console.error('Unhandled promise rejection:', error);
+  console.error('Unhandled promise rejection:', error);
 });
 
 client.login(TOKEN);
