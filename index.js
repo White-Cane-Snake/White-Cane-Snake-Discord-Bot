@@ -29,7 +29,7 @@ client.once("ready", () => {
 
   // 🔴 Set bot to DND
   client.user.setPresence({
-    status: "dnd", // online | idle | dnd | invisible
+    status: "online", // online | idle | dnd | invisible
     activities: [
       {
         name: "Do Not Disturb Mode",
