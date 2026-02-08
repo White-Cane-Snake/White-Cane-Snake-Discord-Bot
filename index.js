@@ -27,7 +27,7 @@ const client = new Client({
 client.once("ready", () => {
   console.log(`✅ Logged in as ${client.user.tag}`);
 
-  // 🔴 Set bot to DND
+
   client.user.setPresence({
     status: "online", // online | idle | dnd | invisible
     activities: [
