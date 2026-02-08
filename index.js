@@ -1,6 +1,6 @@
 require("dotenv").config();
 const express = require("express");
-const { Client, GatewayIntentBits } = require("discord.js");
+const { Client, GatewayIntentBits, ActivityType } = require("discord.js");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -26,20 +26,33 @@ const client = new Client({
 
 client.once("ready", () => {
   console.log(`✅ Logged in as ${client.user.tag}`);
+
+  // 🔴 Set bot to DND
+  client.user.setPresence({
+    status: "dnd", // online | idle | dnd | invisible
+    activities: [
+      {
+        name: "Do Not Disturb Mode",
+        type: ActivityType.Playing
+      }
+    ]
+  });
 });
 
 // Event Listener: Respond to messages
 client.on("messageCreate", (message) => {
-  // 1. Ignore messages from bots (prevents infinite loops)
+  // Ignore bot messages
   if (message.author.bot) return;
 
-
-  
+  // Example command
+  if (message.content === "!ping") {
+    message.reply("🏓 Pong!");
+  }
 });
 
 // Global error handling to prevent crash
-process.on('unhandledRejection', error => {
-  console.error('Unhandled promise rejection:', error);
+process.on("unhandledRejection", (error) => {
+  console.error("Unhandled promise rejection:", error);
 });
 
 client.login(TOKEN);
