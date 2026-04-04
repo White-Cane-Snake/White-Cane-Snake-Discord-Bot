@@ -32,8 +32,8 @@ client.once("ready", () => {
     status: "online", // online | idle | dnd | invisible
     activities: [
       {
-        name: "",
-        type: ActivityType.Playing
+        name: "Welcome to White Cane Snake",
+        type: ActivityType.watching
       }
     ]
   });
@@ -43,12 +43,6 @@ client.once("ready", () => {
 client.on("messageCreate", (message) => {
   // Ignore bot messages
   if (message.author.bot) return;
-
-  // Example command
-  if (message.content === "!ping") {
-    message.reply("🏓 Pong!");
-  }
-});
 
 // Global error handling to prevent crash
 process.on("unhandledRejection", (error) => {
