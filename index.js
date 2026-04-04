@@ -32,7 +32,7 @@ client.once("ready", () => {
     status: "online", // online | idle | dnd | invisible
     activities: [
       {
-        name: "Do Not Disturb Mode",
+        name: "",
         type: ActivityType.Playing
       }
     ]
